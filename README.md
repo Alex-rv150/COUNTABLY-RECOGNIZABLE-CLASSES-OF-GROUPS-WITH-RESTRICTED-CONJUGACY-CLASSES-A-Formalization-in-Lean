@@ -55,11 +55,7 @@ Formalization of Lemma 3.3 from de Giovanni & Trombetti: a countable union of su
 - `countablyRecognizable_iUnion` (Lemma 3.3): the union of countably many iso-closed, subgroup-closed, countably recognizable classes is countably recognizable.
 
 
-## FC-groups: Lemma 3.1 and Theorem 3.2 in Lean 4
-
-Formalization of Lemma 3.1 and Theorem 3.2 from de Giovanni & Trombetti, *Countably recognizable classes of groups with restricted conjugacy classes*, Int. J. Group Theory 7 (2018), 5–16.
-
-**Lemma 3.1.** For every group $G$, countable subgroup $X$ and $n \ge 0$, there is a countable subgroup $H \ge X$ with $H \cap FC_n(G) = FC_n(H)$.
+## Theorem 3.2 in Lean 4
 
 **Theorem 3.2.** For each positive integer $n$, the class of $FC$-nilpotent groups of class at most $n$ is countably recognizable. In Lean it is proved for every `n : ℕ`, including `n = 0`.
 
@@ -94,8 +90,8 @@ Formalization of Lemma 3.1 and Theorem 3.2 from de Giovanni & Trombetti, *Counta
 - `fcCenter_of_injective`: if `f : A →* B` is injective and `f a ∈ FC(B)`, then `a ∈ FC(A)`.
 - `fcSeries_comap_le`: if `f : A →* B` is injective, then `f⁻¹(FC_n(B)) ≤ FC_n(A)`. For subgroups, `Y ∩ FC_n(G) ≤ FC_n(Y)`.
 
-### Main theorems
+### theorems
 - `exists_countable_fcSeries` (Lemma 3.1): for a countable `X ≤ G`, there is a countable `H ≥ X` with `FC_n(H) ⊆ FC_n(G)`. Together with `fcSeries_comap_le` this gives `H ∩ FC_n(G) = FC_n(H)`.
+  
+### Main theorem
 - `isFCNilpotentOfClassLE_countablyRecognizable` (Theorem 3.2): `CountablyRecognizable (IsFCNilpotentOfClassLE n)` for every `n`.
-
-**Proof sketch of Theorem 3.2.** Let `x ∈ G` and `X = ⟨x⟩`, which is countable. Lemma 3.1 gives a countable `H ≥ X` with `FC_n(H) ⊆ FC_n(G)`. By hypothesis `FC_n(H) = H`, so `H ≤ FC_n(G)` and hence `x ∈ FC_n(G)`. Since `x` was arbitrary, `FC_n(G) = G`.
