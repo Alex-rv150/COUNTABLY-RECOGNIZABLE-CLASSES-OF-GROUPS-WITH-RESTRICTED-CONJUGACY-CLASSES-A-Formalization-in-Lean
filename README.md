@@ -31,3 +31,25 @@ Formalization of Lemma 3.1 from de Giovanni & Trombetti, *Countably recognizable
 
 ## Main theorem
 - `exists_countable_fcSeries` (Lemma 3.1): for countable `X ≤ G`, there is a countable `H ≥ X` with `FC_n(H) ⊆ FC_n(G)`. Together with `fcSeries_comap_le` this gives `H ∩ FC_n(G) = FC_n(H)`.
+  
+## Lemma 3.3 in Lean 4
+
+Formalization of Lemma 3.3 from de Giovanni & Trombetti: a countable union of subgroup-closed, countably recognizable group classes is countably recognizable.
+
+**Lemma 3.3.** Let $(\mathfrak{X}_n)_{n}$ be a countable collection of subgroup-closed, countably recognizable group classes. Then $\mathfrak{X} = \bigcup_n \mathfrak{X}_n$ is countably recognizable.
+
+### Definitions
+- `GroupProperty`: a class of groups, viewed as a predicate on groups.
+- `IsoClosed X`: `X` is invariant under isomorphism.
+- `SubgroupClosed X`: every subgroup of an `X`-group is an `X`-group.
+- `CountablyRecognizable X`: `G ∈ X` whenever all countable subgroups of `G` are in `X`.
+
+### Lemmas
+- `SubgroupClosed.of_le`: if `H ≤ K` and `K ∈ X`, then `H ∈ X` (for `X` subgroup- and iso-closed).
+- `countable_inv`: `S` countable implies `S⁻¹` countable.
+- `countable_closure`: `S` countable implies `⟨S⟩` countable (as a set).
+- `countable_closure'`: `S` countable implies `⟨S⟩` countable (as a type).
+- `countable_iSup`: a countable join of countable subgroups is countable.
+
+### Main theorem
+- `countablyRecognizable_iUnion` (Lemma 3.3): the union of countably many iso-closed, subgroup-closed, countably recognizable classes is countably recognizable.
