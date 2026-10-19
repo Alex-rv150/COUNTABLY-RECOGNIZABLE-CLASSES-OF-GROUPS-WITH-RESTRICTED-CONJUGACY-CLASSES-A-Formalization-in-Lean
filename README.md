@@ -96,6 +96,56 @@ Formalization of Lemma 3.3 from de Giovanni & Trombetti: a countable union of su
 ### Main theorem
 - `isFCNilpotentOfClassLE_countablyRecognizable` (Theorem 3.2): `CountablyRecognizable (IsFCNilpotentOfClassLE n)` for every `n`.
 
+## Corollary 3.4 in Lean 4
+
+**Corollary 3.4.** The class of FC-nilpotent groups is countably recognizable.
+
+### Definitions
+
+* `GroupProperty`: a class of groups, viewed as a predicate on groups.
+* `CountablyRecognizable X`: `G ∈ X` whenever all countable subgroups of `G` are in `X`.
+* `IsoClosed X`: `X` is invariant under isomorphism.
+* `SubgroupClosed X`: every subgroup of an `X`-group is an `X`-group.
+* `fcCenter G`: the FC-centre of `G`, i.e. the subgroup of elements with finitely many conjugates.
+* `fcSeriesAux G n`: the `n`-th term of the upper FC-central series, bundled with a proof that it is normal (auxiliary).
+* `fcSeries G n`: the `n`-th term $FC_n(G)$ of the upper FC-central series, with $FC_0(G) = 1$ and $FC_{n+1}(G)/FC_n(G) = FC(G/FC_n(G))$.
+* `IsFCNilpotentOfClassLE n G`: $FC_n(G) = G$, i.e. `G` is FC-nilpotent of class at most `n`.
+* `IsFCNilpotent G`: $FC_n(G) = G$ for some `n`.
+* `FCGood G n H`: for a subgroup `H ≤ G`, $FC_n(H) \le FC_n(G)$ (the non-trivial inclusion in Lemma 3.1).
+
+### Lemmas
+
+FC-centre and FC-series:
+
+* `mem_fcCenter`: `x ∈ fcCenter G` if and only if `x` has finitely many conjugates.
+* `fcCenter_normal`: the FC-centre is a normal subgroup (instance).
+* `fcCenter_of_injective`: if `f : A →* B` is injective and `f a ∈ FC(B)`, then `a ∈ FC(A)`.
+* `fcCenter_of_surjective`: if `f : A →* B` is surjective and `a ∈ FC(A)`, then `f a ∈ FC(B)`.
+* `fcSeries_zero`: `fcSeries G 0 = ⊥` (simp lemma).
+* `fcSeries_normal`: every `fcSeries G n` is normal (instance).
+* `mem_fcSeries_succ`: `x ∈ fcSeries G (n + 1)` if and only if its image in `G / fcSeries G n` lies in the FC-centre.
+* `fcSeries_comap_le`: for an injective `f : A →* B`, $f^{-1}(FC_n(B)) \le FC_n(A)$; for `H ≤ G` this gives $H \cap FC_n(G) \le FC_n(H)$.
+* `exists_conj_seq_of_not_mem_fcSeries_succ`: if `a ∉ fcSeries G (n + 1)`, there is a sequence `w : ℕ → G` whose conjugates `w i * a * (w i)⁻¹` lie in pairwise distinct cosets of `fcSeries G n`.
+
+Closure properties of the classes $FC_n$:
+
+* `isFCNilpotentOfClassLE_isoClosed`: the class of FC-nilpotent groups of class at most `n` is isomorphism-closed.
+* `isFCNilpotentOfClassLE_subgroupClosed`: the same class is subgroup-closed.
+* `SubgroupClosed.of_le`: if `H ≤ K` and `K ∈ X`, then `H ∈ X` (for `X` subgroup- and iso-closed).
+
+Countability:
+
+* `countable_inv`: `S` countable implies `S⁻¹` countable.
+* `countable_closure'`: `S` countable implies `⟨S⟩` countable (as a set).
+* `countable_iSup`: a countable join of countable subgroups is countable.
+
+### Main theorems
+
+* `exists_countable_fcSeries` (Lemma 3.1): for every `n` and every countable subgroup `X` of `G` there is a countable subgroup `H` with `X ≤ H` and `FCGood G n H`. Together with `fcSeries_comap_le`, this gives $H \cap FC_n(G) = FC_n(H)$.
+* `isFCNilpotentOfClassLE_countablyRecognizable` (Theorem 3.2): for every `n`, the class of FC-nilpotent groups of class at most `n` is countably recognizable.
+* `countablyRecognizable_iUnion` (Lemma 3.3): the union of countably many iso-closed, subgroup-closed, countably recognizable classes is countably recognizable.
+* `isFCNilpotent_countablyRecognizable` (Corollary 3.4): the class of FC-nilpotent groups is countably recognizable. It is `countablyRecognizable_iUnion` applied to the classes `IsFCNilpotentOfClassLE n`.
+
 ## Lemma 3.5 in Lean 4
 
 Formalization of Lemma 3.5 from de Giovanni & Trombetti: for a countable subgroup $X$ of a group $G$ and an element $g \in G$, there is a countable subgroup $Y$ containing $\langle g, X\rangle$ such that $C_X(\langle g\rangle^{G}) = C_X(\langle g\rangle^{Y})$.
