@@ -95,3 +95,27 @@ Formalization of Lemma 3.3 from de Giovanni & Trombetti: a countable union of su
   
 ### Main theorem
 - `isFCNilpotentOfClassLE_countablyRecognizable` (Theorem 3.2): `CountablyRecognizable (IsFCNilpotentOfClassLE n)` for every `n`.
+
+## Lemma 3.5 in Lean 4
+
+Formalization of Lemma 3.5 from de Giovanni & Trombetti: for a countable subgroup $X$ of a group $G$ and an element $g \in G$, there is a countable subgroup $Y$ containing $\langle g, X\rangle$ such that $C_X(\langle g\rangle^{G}) = C_X(\langle g\rangle^{Y})$.
+
+**Lemma 3.5.** Let $G$ be a group, and let $X$ be a countable subgroup of $G$. Then for every element $g$ of $G$ there exists a countable subgroup $Y$ of $G$ such that $\langle g, X\rangle \le Y$ and $C_X(\langle g\rangle^{G}) = C_X(\langle g\rangle^{Y})$.
+
+### Definitions
+
+* `conjSet g Y`: the set $\{ygy^{-1} : y \in Y\}$ of `Y`-conjugates of `g`; it generates the normal closure $\langle g\rangle^{Y}$.
+* `conjCent g Y`: the centralizer in `G` of `conjSet g Y`, i.e. $C_G(\langle g\rangle^{Y})$ (built on Mathlib's `Subgroup.centralizer`).
+
+###
+Lemmas
+
+* `mem_conjCent_iff`: `x ∈ conjCent g Y` if and only if `x` commutes with every `Y`-conjugate of `g`.
+* `conjCent_antitone`: if `Y ≤ Z` then `conjCent g Z ≤ conjCent g Y`.
+* `countable_inv`: `S` countable implies `S⁻¹` countable.
+* `countable_closure'`: `S` countable implies `⟨S⟩` countable (as a set).
+
+## Main theorem
+
+* `exists_countable_conjCent_eq` (Lemma 3.5): for a countable subgroup `X` and `g : G`, there is a countable subgroup `Y` with `g ∈ Y`, `X ≤ Y` and `X ⊓ conjCent g ⊤ = X ⊓ conjCent g Y`.
+
